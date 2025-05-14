@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volksvago</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="img/seguro-de-automovel.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #6e7dff, #00bcd4);
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            max-width: 350px;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        h2 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+            color: #444;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 18px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        input[type="number"]:focus, select:focus {
+            border-color: #007BFF;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        input[type="checkbox"] {
+            margin-top: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #FF6347;
+            color: white;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #e55347;
+        }
+
+        #resultado {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-top: 20px;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .footer a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        
+        <h2>Volksvago</h2>
+        
+        <label for="placa">Placa do veículo:</label>
+        <input type="text" id="placa" placeholder="Digite a placa">
+        
+        <label for="tipo">Tipo de veículo:</label>
+        <select id="tipo">
+            <option value="2.00">Compacto - R$2,00/h</option>
+            <option value="2.50">Hatch - R$2,50/h</option>
+            <option value="2.50">Sedan - R$2,50/h</option>
+            <option value="3.00">SUV - R$3,00/h</option>
+            <option value="4.00">Picape - R$4,00/h</option>
+        </select>
+
+        <label for="tempo">Tempo estacionado (horas):</label>
+        <input type="number" id="tempo" min="1" value="1">
+
+        <label>
+            <input type="checkbox" id="eletrico"> Veículo elétrico (50% de desconto na 1ª hora)
+        </label>
+
+        <button onclick="calcularPreco()">Calcular</button>
+        
+        <h2 id="resultado">Valor a pagar: R$0,00</h2>
+    </div>
+
+    <div class="footer">
+        <p>Powered by <a href="https://www.volksvago.com.br" target="_blank">Volksvago</a></p>
+    </div>
+
+    <script>
+        function calcularPreco() {
+            let placa = document.getElementById("placa").value.trim();
+            let tipo = parseFloat(document.getElementById("tipo").value);
+            let tempo = parseInt(document.getElementById("tempo").value);
+            let eletrico = document.getElementById("eletrico").checked;
+            
+            // Validação de entrada
+            if (!placa || tempo < 1) {
+                alert("Por favor, insira uma placa válida e um tempo correto.");
+                return;
+            }
+
+            let preco = tipo * tempo;
+
+            // Desconto para veículos elétricos
+            if (eletrico && tempo >= 1) {
+                preco -= tipo * 0.5; 
+            }
+
+            // Exibe o resultado
+            document.getElementById("resultado").textContent = `Valor a pagar: R$${preco.toFixed(2)}`;
+        }
+    </script>
+
+</body>
+</html>
